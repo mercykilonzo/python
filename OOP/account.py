@@ -6,6 +6,7 @@ class Account:
         self.deposits = []
         self.withdrawals = []
         self.loan = 0
+        self.minimum_balance = 0
         
 
     def deposit(self,amount):
@@ -81,7 +82,10 @@ class Account:
             print(f"Deposit: {deposit}")
         for withdrawal in self.withdrawals:
             print(f"Withdrwal: {withdrawal}")    
-
+    def min_balance(self, account):
+        if amount>=0:
+            self.minimum_balance = amount
+            return f"Your account minumum is {self.minimum_balance}"
         
     def apply_interest(self):
         interest = self.loan * 0.05
