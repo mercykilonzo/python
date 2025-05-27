@@ -6,7 +6,9 @@ class Account:
         self.deposits = []
         self.withdrawals = []
         self.loan = 0
+        self.frozen = False
         self.minimum_balance = 0
+        self.is_closed = False
         
 
     def deposit(self,amount):
@@ -18,19 +20,18 @@ class Account:
                      
         return f"Dear {self.name} your balance is {totaldeposit}"
 
-    # Withdraw: method to withdraw funds, store the withdrawal and return a message with the new balance to the customer.
-    #  An account cannot be overdrawn
-    def withdraw(self,amounts):
-        self.withdrawals.append(amounts)
-        totalwithdrawal = 0
-        for i in self.withdrawals:
+      def withdraw(self,amounts):
+        if amount > 0 and (self.balance - amount) >= self.minimum_balance:
+            self.withdrawals.append(amounts)
+            totalwithdrawal = 0
+            for i in self.withdrawals:
             totalwithdrawal+=i
                     
-        totaldeposit = 0 
-        for i in self.deposits:
+            totaldeposit = 0 
+            for i in self.deposits:
             totaldeposit+=i
 
-        self.balance = totaldeposit - totalwithdrawal        
+            self.balance = totaldeposit - totalwithdrawal        
         return f"Dear {self.name} your balance is {self.balance}"
         
               
@@ -91,7 +92,7 @@ class Account:
         interest = self.loan * 0.05
         self.loan += interest
         return f"Your interest is {interest} and total {self.loan}"
-    def freez(self):
+    def freeze(self):
         self.frozen = True
         return f"Account has been frozen for security reason"
     def un_freeze(self):
