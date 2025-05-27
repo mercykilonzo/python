@@ -17,22 +17,15 @@ class Account:
         totaldeposit = 0 
         for i in self.deposits:
             totaldeposit+=i
+        self.balance+=totaldeposit    
                      
         return f"Dear {self.name} your balance is {totaldeposit}"
 
-      def withdraw(self,amounts):
-        if amount > 0 and (self.balance - amount) >= self.minimum_balance:
+    def withdraw(self,amounts):
+        if amounts > 0 and (self.balance - amounts) >= self.minimum_balance:
             self.withdrawals.append(amounts)
-            totalwithdrawal = 0
-            for i in self.withdrawals:
-            totalwithdrawal+=i
-                    
-            totaldeposit = 0 
-            for i in self.deposits:
-            totaldeposit+=i
-
-            self.balance = totaldeposit - totalwithdrawal        
-        return f"Dear {self.name} your balance is {self.balance}"
+            self.balance = self.balance - amounts       
+            return f"Dear {self.name} your balance is {self.balance}"
         
               
     def get_balance(self):
@@ -82,8 +75,9 @@ class Account:
         for deposit in self.deposits:
             print(f"Deposit: {deposit}")
         for withdrawal in self.withdrawals:
-            print(f"Withdrwal: {withdrawal}")    
-    def min_balance(self, account):
+            print(f"Withdrwal: {withdrawal}")   
+
+    def min_balance(self, amount):
         if amount>=0:
             self.minimum_balance = amount
             return f"Your account minumum is {self.minimum_balance}"
