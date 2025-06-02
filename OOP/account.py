@@ -40,19 +40,14 @@ class Account:
         self.balance = totaldeposit - totalwithdrawal  
         return f"Dear {self.name}, your balance is {self.balance}"
 
-    def transfer_funds(self,amount):
+    def transfer_funds(self,amount,target_account):
         if amount > 0 and self.balance >= amount:
-            self.withdrawals.append(amount)
-            totalwithdrawal = 0
-        for i in self.withdrawals:
-            totalwithdrawal+=i
+            self.withdrawals(amount)
+            target_account.deposit(amount)
+            new_balance = self.get_balance()
 
-        totaldeposit = 0 
-        for i in self.deposits:
-            totaldeposit+=i
-
-        self.balance = totaldeposit - totalwithdrawal 
-        return f"Dear {self.name}, you transferd {amount}. Your new balance is {self.balance}"
+             
+        return f"Dear {self.name}, you transferd {amount}. Your new balance is {new_balance}"
 
     def request_loan (self,amount):
         if amount > 0 :
@@ -99,3 +94,26 @@ class Account:
         self.loan = 0
         self.min_balance = 0
         return f"Your account has been closed"
+
+    def calculate_loan_limit(self):
+        total.deposits = sum(self.deposits)  
+        return total.deposits // 3  
+    def request_loan(self,amount):
+        limit = calculate_loan_limit()
+        if amount > limit:
+            return f"Your cannot get loan for {amount}. Your loan limit is {limit}"
+
+
+
+
+
+
+
+
+
+
+
+
+   
+                    
+
