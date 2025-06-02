@@ -109,7 +109,15 @@ class Account:
 
 
 
-
+def transfer_funds(self,amount,account):
+        self.__check_account_status()
+        self._validate_withdrawal(amount)
+        if not isinstance(account,Account):
+            raise ValueError("Account does not exist")
+        self._transactions.append(Transaction("Transferred to another account",-amount,"transfer"))
+        account.deposit(amount)
+        account._transactions.append(Transaction("Transferred  from another account",amount,"transfer"))
+        return f"Transferred {amount} to {account._owner}.Your new balance {self.get_balance()}"
 
 
 

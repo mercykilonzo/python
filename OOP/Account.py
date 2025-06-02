@@ -36,19 +36,33 @@ class Account:
     def get_balance(self):
         return sum(t.amount for t in self.transactions)
 
+    def transfer(self, amount,account_owner):
+        if amount > 0 and amount <= self.__balance:
+            self.__balance -= amount
+            self.transactions.append(Transaction("Transferred to another account",-amount,"transfer"))
+            return f"Transferred {amount} to {account_owner}.Your new balance {self.get_balance()}"
+
     def view_account_details(self):
         return f"Name: {self.name}, Account No: {self.__account_number}, Balane {self.get_balance()}"
 
     def get_account_number(self):
-        return self.__account_number
+        return self.__account_number 
+    
+    def account_statement(self):
+        print("Account statement")
+        for deposit in self.deposits:
+            print(f"Deposit: {deposit}")
+        for withdrawal in self.withdrawals:
+            print(f"Withdrwal: {withdrawal}")   
 
     def statement(self):
         print("Account Statement:")
         for t in self.transactions:
             print(f"{t.date} - {t.narration} - {t.amount}")
         print(f"Your balance is {self.get_balance()}")
+
     def calculate_loan_limit(self):
-        limit = sum(t.amount for t in self.transactions if transactiontype =="Deposit")    
+        limit = sum(t.amount for t in self.transactions)    
         return limit//3
     def request_loan(self,amount):
         limit = calculate_loan_limit()
@@ -63,18 +77,9 @@ class Account:
             self.balance -= amount
             return f"You have repaid your loan, your new loan debt is {self.loan}"        
 
-    def account_details(self):
-        return f"{self.name}, your balance is {self.balance}"
-
+    
     def account_owner(self,newOwner):
         self.name = newOwner
-
-    def account_statement(self):
-        print("Account statement")
-        for deposit in self.deposits:
-            print(f"Deposit: {deposit}")
-        for withdrawal in self.withdrawals:
-            print(f"Withdrwal: {withdrawal}")   
 
     def min_balance(self, amount):
         if amount>=0:
