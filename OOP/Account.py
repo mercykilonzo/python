@@ -7,6 +7,9 @@ class Transaction:
         self.narration = narration
         self.amount = amount
         self.transactiontype = transactiontype
+    
+    def __str__(self):
+        return f"{self.date.strftime('%Y-%m-%d %H:%M:%S')} | {self.transactiontype.upper():<10} | {self.narration:<30} | {self.amount:.2f}"    
        
 class Account:
     account_number_counter = 101020
@@ -58,24 +61,27 @@ class Account:
     def statement(self):
         print("Account Statement:")
         for t in self.transactions:
-            print(f"{t.date} - {t.narration} - {t.amount}")
+            # print(f"{t.date} - {t.narration} - {t.amount}")
+              print(t)
         print(f"Your balance is {self.get_balance()}")
 
     def calculate_loan_limit(self):
         limit = sum(t.amount for t in self.transactions)    
         return limit//3
     def request_loan(self,amount):
-        limit = calculate_loan_limit()
+        limit = self.calculate_loan_limit()
         if amount > limit:
             return f"Your cannot get loan for {amount}. Your loan limit is {limit}" 
         else:
+            self.loan+=amount
+            self.transactions.append(Transaction(narration = "You have receive a loan ",amount = amount,transactiontype = "loan"))
             return f"Your have received a {amount} loan."       
    
     def repay_loan (self,amount):
         if amount > 0:
             self.loan -= amount
-            self.balance -= amount
-            return f"You have repaid your loan, your new loan debt is {self.loan}"        
+            self.transactions.append(Transaction(narration = "You have repaid a loan ",amount = amount,transactiontype = "loan"))        
+            return f"You have repaid your loan, your new loan debt is {self.loan} and your balance is {self.get_balance()}"        
 
     
     def account_owner(self,newOwner):
